@@ -1,12 +1,15 @@
 <template>
-  <h1>A single user: {{ $route.params.id }}</h1>
+  <h1>A single user, with ID: {{ $route.params.id }}</h1>
 </template>
 
 <script>
-export default {
-  layout: 'users',
-  validate(data) {
-    return /^\d+$/.test(data.params.id)
+  export default {
+    validate(data) {
+      return /^\d+$/.test(data.params.id);
+    }
   }
-}
 </script>
+
+<style scoped>
+
+</style>

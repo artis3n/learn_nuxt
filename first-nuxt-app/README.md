@@ -1,12 +1,12 @@
 # first-nuxt-app
 
-> My supreme Nuxt.js project
+> My sublime Nuxt.js project
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
-$ npm run install
+$ npm install
 
 # serve with hot reload at localhost:3000
 $ npm run dev

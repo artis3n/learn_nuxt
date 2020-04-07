@@ -1,10 +1,10 @@
 <template>
-  <header class="header">
-    <ul class="nav-items">
-      <li>
+  <header>
+    <ul class="header">
+      <li class="nav-items">
         <nuxt-link to="/">Home</nuxt-link>
       </li>
-      <li>
+      <li class="nav-items">
         <nuxt-link to="/users">Users</nuxt-link>
       </li>
     </ul>
@@ -12,38 +12,27 @@
 </template>
 
 <script>
-export default {
-  name: 'Header'
-}
+  export default {
+  }
 </script>
 
 <style scoped>
-.header {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  background-color: lightgray;
-}
+  .header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+  }
 
-.nav-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 80%;
-}
-
-.nav-items a {
-  text-decoration: none;
-  color: black;
-}
-
-.nav-items a:hover,
-.nav-items a:active {
-  color: white;
-}
+  .nav-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+  }
 </style>
