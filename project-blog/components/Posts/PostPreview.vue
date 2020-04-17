@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/posts/' + id" class="post-preview">
+  <nuxt-link :to="postLink" class="post-preview">
     <article>
       <div class="post-thumbnail"
            :style="{ backgroundImage: `url('${thumbnail}')` }"
@@ -32,7 +32,21 @@
         type: String,
         required: true,
       },
+      isAdmin: {
+        type: Boolean,
+        required: true,
+      },
     },
+
+    computed: {
+      postLink() {
+        const routeMap = {
+          true: '/admin',
+          false: '/posts'
+        }
+        return `${routeMap[this.isAdmin]}/${this.id}`
+      }
+    }
   }
 </script>
 
