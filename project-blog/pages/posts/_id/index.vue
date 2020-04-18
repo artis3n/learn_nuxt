@@ -1,12 +1,12 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of the Post</h1>
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on: XXX</div>
-        <div class="post-detail">Written by: NAME</div>
+        <div class="post-detail">Last updated on: {{ loadedPost.updatedDate }}</div>
+        <div class="post-detail">Written by: {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content">Content of the post</p>
+      <p class="post-content">{{ loadedPost.content }}</p>
     </section>
     <section class="post-feedback">
       <p>Let me know what you think about the post, send a mail to <a href="mailto:feedback@domain.com">feedback@domain.com</a></p>
@@ -15,7 +15,25 @@
 </template>
 
 <script>
-
+  export default {
+    asyncData(context) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({
+            loadedPost: {
+              id: '1',
+              thumbnail: "https://s14-eu5.startpage.com/cgi-bin/serveimage?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2F_1GLCEPezxk%2Fmaxresdefault.jpg&sp=3ac875bad39b3263c14e485a37d539e5&anticache=720150",
+              title: "Hello There: " + context.params.id,
+              previewText: "This is my first post",
+              author: 'Artis3n',
+              updatedDate: new Date(),
+              content: 'Some dummy text',
+            },
+          })
+        }, 1000)
+      })
+    }
+  }
 </script>
 
 <style scoped>
