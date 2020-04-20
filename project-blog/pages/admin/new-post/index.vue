@@ -1,12 +1,14 @@
 <template>
   <div class="admin-new-post-page">
     <section class="new-post-form">
-      <admin-post-form />
+      <admin-post-form @submit="onSubmitted" />
     </section>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+
   import AdminPostForm from '~/components/Admin/AdminPostForm'
 
   export default {
@@ -14,6 +16,17 @@
     components: {
       AdminPostForm,
     },
+
+    methods: {
+      onSubmitted(postData) {
+        axios.post(`${process.env.FIREBASE_URL}/posts.json`, {
+          ...postData,
+          updatedDate: new Date(),
+        })
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
+      }
+    }
   }
 </script>
 

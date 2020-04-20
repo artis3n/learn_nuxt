@@ -15,23 +15,15 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     asyncData(context) {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve({
-            loadedPost: {
-              id: '1',
-              thumbnail: "https://s14-eu5.startpage.com/cgi-bin/serveimage?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2F_1GLCEPezxk%2Fmaxresdefault.jpg&sp=3ac875bad39b3263c14e485a37d539e5&anticache=720150",
-              title: "Hello There: " + context.params.id,
-              previewText: "This is my first post",
-              author: 'Artis3n',
-              updatedDate: new Date(),
-              content: 'Some dummy text',
-            },
-          })
-        }, 1000)
-      })
+      return axios.get(`${process.env.FIREBASE_URL}/posts/${context.params.id}.json`)
+      .then(res => ({
+        loadedPost: res.data,
+      }))
+      .catch(e => context.error(e))
     }
   }
 </script>
