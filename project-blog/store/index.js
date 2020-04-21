@@ -19,7 +19,7 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexCtx, globalCtx) {
-        return this.$axios.get(`${process.env.FIREBASE_URL}/posts.json`)
+        return globalCtx.app.$axios.get(`${process.env.FIREBASE_URL}/posts.json`)
           .then(res => {
             const postsArray = []
             for (const key in res.data) {

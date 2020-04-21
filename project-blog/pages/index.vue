@@ -8,12 +8,7 @@
 </template>
 
 <script>
-  import PostList from '~/components/Posts/PostList'
-
   export default {
-    components: {
-      PostList,
-    },
     computed: {
       postList() {
         return this.$store.getters.loadedPosts
