@@ -1,7 +1,7 @@
 <template>
   <div class="admin-post-page">
     <section class="update-form">
-      <admin-post-form :post="loadedPost" />
+      <admin-post-form :post="loadedPost" @submit="updatePost" />
     </section>
   </div>
 </template>
@@ -16,13 +16,23 @@
     components: {
       AdminPostForm
     },
+
     asyncData(context) {
       return axios.get(`${process.env.FIREBASE_URL}/posts/${context.params.postId}.json`)
         .then(res => ({
-          loadedPost: res.data,
+          loadedPost: {
+            ...res.data,
+            id: context.params.postId,
+          },
         }))
         .catch(e => context.error(e))
     },
+
+    methods: {
+      updatePost(editedPost) {
+        this.$store.dispatch('editPost', { ...editedPost })
+      }
+    }
   }
 </script>
 

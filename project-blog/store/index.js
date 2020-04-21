@@ -9,7 +9,14 @@ const createStore = () => {
     mutations: {
       setPosts(state, posts) {
         state.loadedPosts = posts
-      }
+      },
+      addPost(state, post) {
+        state.loadedPosts.push(post)
+      },
+      editPost(state, editedPost) {
+        const postIndex = state.loadedPosts.findIndex(post => post.id === editedPost.id)
+        state.loadedPosts[postIndex] = editedPost
+      },
     },
     actions: {
       nuxtServerInit(vuexCtx, globalCtx) {
@@ -25,9 +32,33 @@ const createStore = () => {
           })
           .catch(e => globalCtx.error(e))
       },
+
       setPosts(vuexCtx, posts) {
         vuexCtx.commit('setPosts', posts)
       },
+
+      addPost(vuexCtx, post) {
+        const createdPost = {
+          ...post,
+          updatedDate: new Date(),
+        }
+        return axios.post(`${process.env.FIREBASE_URL}/posts.json`, createdPost)
+          .then(result => {
+            vuexCtx.commit('addPost', { ...createdPost, id: result.data.name })
+          })
+          .catch(err => console.log(err))
+      },
+
+      editPost(vuexCtx, post) {
+        const postId = post.id
+        delete post.id
+        axios.put(`${process.env.FIREBASE_URL}/posts/${postId}.json`, post)
+          .then(() => {
+            vuexCtx.commit('editPost', { ...post, id: postId })
+            this.$router.push('/admin')
+          })
+          .catch(e => console.log(e))
+      }
     },
     getters: {
       loadedPosts(state) {
