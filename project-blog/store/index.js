@@ -1,5 +1,4 @@
 import Vuex from 'vuex'
-import axios from 'axios'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -20,7 +19,7 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexCtx, globalCtx) {
-        return axios.get(`${process.env.FIREBASE_URL}/posts.json`)
+        return this.$axios.get(`${process.env.FIREBASE_URL}/posts.json`)
           .then(res => {
             const postsArray = []
             for (const key in res.data) {
@@ -42,7 +41,7 @@ const createStore = () => {
           ...post,
           updatedDate: new Date(),
         }
-        return axios.post(`${process.env.FIREBASE_URL}/posts.json`, createdPost)
+        return this.$axios.post(`${process.env.FIREBASE_URL}/posts.json`, createdPost)
           .then(result => {
             vuexCtx.commit('addPost', { ...createdPost, id: result.data.name })
           })
@@ -52,7 +51,7 @@ const createStore = () => {
       editPost(vuexCtx, post) {
         const postId = post.id
         delete post.id
-        axios.put(`${process.env.FIREBASE_URL}/posts/${postId}.json`, post)
+        this.$axios.put(`${process.env.FIREBASE_URL}/posts/${postId}.json`, post)
           .then(() => {
             vuexCtx.commit('editPost', { ...post, id: postId })
             this.$router.push('/admin')
