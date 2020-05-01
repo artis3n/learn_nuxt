@@ -20,6 +20,12 @@
       title: 'A Blog Post',
     },
     asyncData(context) {
+      if (context.payload) {
+        return {
+          loadedPost: context.payload.postData,
+        }
+      }
+
       return context.$axios.get(`${process.env.FIREBASE_URL}/posts/${context.params.id}.json`)
       .then(res => ({
         loadedPost: res.data,

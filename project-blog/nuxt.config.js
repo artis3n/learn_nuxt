@@ -1,4 +1,7 @@
 const bodyParser = require('body-parser')
+const axios = require('axios')
+
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -10,7 +13,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
+      }
     ],
     link: [
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap' }
@@ -24,20 +31,19 @@ export default {
   ** Global CSS
   */
   css: [
-    '~assets/styles/main.css',
+    '~assets/styles/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     '~plugins/core-components.js',
-    '~plugins/date-filter.js',
+    '~plugins/date-filter.js'
   ],
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [
-  ],
+  buildModules: [],
   /*
   ** Nuxt.js modules
   */
@@ -45,14 +51,13 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-  },
+  axios: {},
   /*
   ** Build configuration
   */
@@ -60,18 +65,27 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   },
   transition: {
     name: 'fade',
-    mode: 'out-in',
+    mode: 'out-in'
   },
   router: {
-    middleware: 'log',
+    middleware: 'log'
   },
   serverMiddleware: [
     bodyParser.json(),
     '~api'
   ],
+  generate: {
+    routes: function() {
+      return axios.get(`${process.env.FIREBASE_URL}/posts.json`)
+        .then(res => Object.entries(res.data).map(([key, data]) => ({
+          route: `/posts/${key}`,
+          payload: { postData: data }
+        })))
+    }
+  }
 }
