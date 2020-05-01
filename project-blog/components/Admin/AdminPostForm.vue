@@ -18,15 +18,8 @@
 </template>
 
 <script>
-  import AppInputControl from '~/components/UI/AppControlInput'
-  import AppButton from '~/components/UI/AppButton'
-
   export default {
     name: 'AdminPostForm',
-    components: {
-      AppButton,
-      AppInputControl,
-    },
     props: {
       post: {
         type: Object,
