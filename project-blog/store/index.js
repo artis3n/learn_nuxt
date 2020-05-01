@@ -79,6 +79,9 @@ const createStore = () => {
             vuexCtx.commit('setToken', data.idToken)
             Cookie.set('jwt', data.idToken)
             Cookie.set('tokenExpiration', new Date().getTime() + (Number.parseInt(data.expiresIn) * 1000))
+            return this.$axios.$post('http://localhost:3000/api/track-data', {
+              data: 'Registered data!',
+            })
           })
           .catch(e => console.log(e))
       },
